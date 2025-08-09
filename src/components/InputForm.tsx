@@ -1,3 +1,4 @@
+// src/components/InputForm.tsx
 import React, { useState } from 'react';
 
 interface InputFormProps {
@@ -5,13 +6,9 @@ interface InputFormProps {
 }
 
 export const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
-  // text version of the array, as before
   const [text, setText] = useState('3, 1, 4, 1, 5');
-
-  // new: size of random array
   const [size, setSize] = useState(10);
 
-  // helper to generate a random array of given length
   const generateRandom = () => {
     const arr = Array.from({ length: size }, () =>
       Math.floor(Math.random() * 100) + 1
@@ -30,13 +27,15 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full md:w-1/4 p-4 space-y-4">
+    // ❌ was: "w-full md:w-1/4 p-4"
+    // ✅ make it fill the sidebar; let the sidebar handle padding
+    <form onSubmit={handleSubmit} className="w-full space-y-4">
       {/* Input field */}
       <div>
         <label className="block text-sm font-medium mb-1">Input Array</label>
         <input
           type="text"
-          className="block w-full rounded border-gray-300 p-2 focus:ring focus:border-blue-300"
+          className="block w-full rounded-lg border px-3 py-2 text-sm leading-normal focus:outline-none focus:ring focus:border-blue-400"
           value={text}
           onChange={e => setText(e.target.value)}
         />
@@ -45,13 +44,10 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
       {/* Run Button */}
       <button
         type="submit"
-        className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="w-full px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700"
       >
         Run
       </button>
-
-      {/* Divider */}
-      <hr className="my-4" />
 
       {/* Random array controls */}
       <div>
@@ -68,10 +64,11 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit }) => {
           className="w-full"
         />
       </div>
+
       <button
         type="button"
         onClick={generateRandom}
-        className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        className="w-full px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-medium hover:bg-green-700"
       >
         Generate Random Array
       </button>
